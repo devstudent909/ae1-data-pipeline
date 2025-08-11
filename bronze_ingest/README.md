@@ -35,4 +35,26 @@ Cloud Storage → Buckets → `ae1-bronze-data` → **Create folder** `imdb/` �
 
 > Note: We **do not** store these large data files in GitHub. This repo contains only documentation, screenshots, and helper scripts.
 
+---
+
+## 2) NASA DONKI API – JSON Backup
+
+**Method:**  
+Ingested via a **GCP Cloud Function** (`fetch_nasa_data`) triggered manually for initial run.  
+The function fetched recent DONKI notifications from NASA’s public API and published them to a **Pub/Sub topic** (`nasa-topic`).  
+Messages were streamed into the **Bronze bucket** for backup.
+
+**Bronze location:**  
+`gs://ae1-bronze-data-bucket/nasa/`
+
+**Files uploaded:**  
+- `notifications_YYYY-MM-DD_YYYY-MM-DD.json` — Raw NASA DONKI notifications
+
+**Verification steps:**  
+1. Confirm JSON file exists in `nasa/` folder of the Bronze bucket.  
+2. Spot-check file contents using the GCP Storage browser preview.
+
+**Screenshot evidence:**  
+- `screenshots/nasa_bronze_list.png` — Listing of NASA JSON file in Bronze.
+
 
