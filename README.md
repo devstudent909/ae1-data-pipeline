@@ -5,14 +5,17 @@ The project implements an **end-to-end data pipeline** in **Google Cloud Platfor
 
 ---
 
-##  Repository Structure
 
+## Repository Structure
 
+'''
 ae1-data-pipeline/
 │
-├── bronze\_ingest/        # Bronze (Raw) zone ingestion steps, screenshots, README
-└── README.md             # (this file)
-
+├── bronze_ingest/   # Bronze (Raw) zone ingestion steps, screenshots, README
+├── cloud_function/  # NASA DONKI API ingestion Cloud Function code
+├── dataflow/        # Dataflow pipeline scripts (streaming & batch)
+└── README.md        # (this file)
+'''
 
 
 ---
@@ -21,6 +24,10 @@ ae1-data-pipeline/
 
 1. **Ingestion (Bronze Layer)**  
    - IMDB `.tsv.gz` full dump uploaded to GCS (`ae1-bronze-data/imdb/`).  
+   - NASA DONKI API data ingested via GCP Cloud Function.
+2. **Streaming to Silver (NASA only)**  
+   - NASA raw JSON streamed from Bronze to Silver using Apache Beam / Dataflow pipeline.  
+   - Cleans data (basic field formatting, null handling) before writing to `ae1-silver-data-bucket/nasa/`.
 
 ---
 
@@ -35,9 +42,15 @@ ae1-data-pipeline/
 
 - **Large datasets** (IMDB dump) are **not stored in GitHub**. Only documentation, screenshots, and code are included.
 - Code is tested in **GCP us (multiple regions in United States)** regions.
+- Bucket naming convention:  
+  - `ae1-bronze-data-bucket` (Raw zone)  
+  - `ae1-silver-data-bucket` (Cleansed zone)  
+  - `ae1-gold-data-bucket` (Curated zone)  
+  - `ae1-tmp-data-bucket` (temporary staging)
 
 ---
 
 ## Change Log
 
 - **2025-8-11** – Created repo, added Bronze Layer ingestion README & IMDB screenshot.
+- **2025-08-11** – Added NASA Cloud Function and Dataflow streaming pipeline code.
