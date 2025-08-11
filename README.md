@@ -29,9 +29,17 @@ ae1-data-pipeline/
 ├── dataproc/                            # Spark jobs for batch transformations
 │   └── imdb_to_silver.py
 │
+├── silver_process/
+│   ├── README.md
+│   └── screenshots/
+│       ├── dataproc_job_success.png
+│       ├── parquet_files_silver_bucket.png
+│       └── bigquery_external_table.png
 ├── sql_queries/                         # BigQuery SQL scripts
 │   ├── nasa_silver_create.sql
 │   └── imdb_silver_create.sql
+│   └── imdb_create_external_table.sql
+│   ├── imdb_silver_table.sql
 │
 └── README.md                            # (this file)
 ```
@@ -77,6 +85,7 @@ ae1-data-pipeline/
 
 ## Change Log
 
-- **First commit:** – Created repo, added Bronze Layer ingestion README & IMDB screenshot.
-- **Second commit** – Added NASA Cloud Function and Dataflow streaming pipeline code.
-- **Third commit** - Add NASA ingestion, Dataflow pipeline, IMDB Dataproc batch processing, and update documentation
+- **First commit:** – Created repo, added Bronze Layer ingestion README & IMDB screenshot
+- **Second commit** – Added NASA Cloud Function and Dataflow streaming pipeline code
+- **Third commit** - Added NASA ingestion, Dataflow pipeline, IMDB Dataproc batch processing, and update documentation
+- **Fourth commit** - Added Silver processing documentation, screenshots, and SQL for IMDB Silver external table
