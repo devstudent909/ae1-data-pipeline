@@ -10,9 +10,10 @@ The project implements an **end-to-end data pipeline** in **Google Cloud Platfor
 
 
 ```
+
 ae1-data-pipeline/
 │
-├── bronze_ingest/                      # Bronze (Raw) layer ingestion steps, screenshots, README
+├── bronze_ingest/                      # Bronze (Raw) layer ingestion steps, README
 │   ├── imdb/                            # IMDB raw ingestion
 │   ├── nasa/                            # NASA raw ingestion
 │   └── README.md
@@ -30,18 +31,32 @@ ae1-data-pipeline/
 │   └── imdb_to_silver.py
 │
 ├── silver_process/
-│   ├── README.md
-│   └── screenshots/
-│       ├── dataproc_job_success.png
-│       ├── parquet_files_silver_bucket.png
-│       └── bigquery_external_table.png
+│   └── README.md
+│
 ├── sql_queries/                         # BigQuery SQL scripts
 │   ├── nasa_silver_create.sql
-│   └── imdb_silver_create.sql
-│   └── imdb_create_external_table.sql
-│   ├── imdb_silver_table.sql
+│   ├── imdb_silver_create.sql
+│   ├── imdb_create_external_table.sql
+│   └── imdb_silver_table.sql
+	└── sql/imdb/create-all-tables-silver-imdb.sql
+	└── sql/imdb/create-raw-imdb-dataset.sql
+	└── sql/imdb/create-raw-imdb-tables-full-final.sql
+	└── sql/imdb/create-silver-imdb-title-basics.sql
+	└── sql/imdb/create-tables-from-raw-imdb-dataset.sql
+	└── sql/imdb/recreate-name-basics-raw-imdb.sql
+	└── sql/imdb/recreate-title-basics-imdb-raw.sql
+│
+├── docs/                                # Centralized diagrams & screenshots
+│   ├── Task-1-architecture.png
+│   ├── dataproc_job_success.png
+│   ├── parquet_files_silver_bucket.png
+│   ├── bigquery_external_table.png
+│   ├── dataflow_running.png
+│   ├── dataflow_success.png
+│   └── table_mapping.png
 │
 └── README.md                            # (this file)
+
 ```
 
 
@@ -89,3 +104,5 @@ ae1-data-pipeline/
 - **Second commit** – Added NASA Cloud Function and Dataflow streaming pipeline code
 - **Third commit** - Added NASA ingestion, Dataflow pipeline, IMDB Dataproc batch processing, and update documentation
 - **Fourth commit** - Added Silver processing documentation, screenshots, and SQL for IMDB Silver external table
+- **Fifth commit** - Restructured and added new screenshots into docs, added SQL script files
+- **Sixth commit** - Updated main.py in cloud_function to fetch more data from Nasa DONKI API
