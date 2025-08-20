@@ -19,7 +19,13 @@ bg   = spark.read.format("bigquery").option("table", bq(f"{SRC_DATASET}.bridge_t
 dg   = spark.read.format("bigquery").option("table", bq(f"{SRC_DATASET}.dim_genre")).load()
 dt   = spark.read.format("bigquery").option("table", bq(f"{SRC_DATASET}.dim_title")).load()
 
-movies = fact.filter((F.col("titleType") == "movie") & F.col("start_year").isNotNull())
+
+# Filter movies with at least 50k votes
+movies = (fact
+    .filter((F.col("titleType") == "movie") &
+            F.col("start_year").isNotNull() &
+            (F.col("numVotes") >= 50000))
+)
 
 # ---------- A) GENRE x YEAR ----------
 gxy_raw = (movies
