@@ -11,6 +11,7 @@ The project implements an **end-to-end data pipeline** in **Google Cloud Platfor
 
 ```
 
+
 ae1-data-pipeline/
 │
 ├── bronze_ingest/                      # Bronze (Raw) layer ingestion steps, README
@@ -30,22 +31,6 @@ ae1-data-pipeline/
 ├── dataproc/                            # Spark jobs for batch transformations
 │   └── imdb_to_silver.py
 │
-├── silver_process/
-│   └── README.md
-│
-├── sql_queries/                         # BigQuery SQL scripts
-│   ├── nasa_silver_create.sql
-│   ├── imdb_silver_create.sql
-│   ├── imdb_create_external_table.sql
-│   └── imdb_silver_table.sql
-	└── sql/imdb/create-all-tables-silver-imdb.sql
-	└── sql/imdb/create-raw-imdb-dataset.sql
-	└── sql/imdb/create-raw-imdb-tables-full-final.sql
-	└── sql/imdb/create-silver-imdb-title-basics.sql
-	└── sql/imdb/create-tables-from-raw-imdb-dataset.sql
-	└── sql/imdb/recreate-name-basics-raw-imdb.sql
-	└── sql/imdb/recreate-title-basics-imdb-raw.sql
-│
 ├── docs/                                # Centralized diagrams & screenshots
 │   ├── Task-1-architecture.png
 │   ├── dataproc_job_success.png
@@ -55,7 +40,24 @@ ae1-data-pipeline/
 │   ├── dataflow_success.png
 │   └── table_mapping.png
 │
-└── README.md                            # (this file)
+├── silver_process/                      # Data processing for the Silver layer
+│   └── README.md
+│
+└── sql/                                 # BigQuery SQL scripts
+    ├── nasa/
+    │   └── nasa_silver_create.sql
+    ├── imdb/
+    │   ├── create-all-tables-silver-imdb.sql
+    │   ├── create-raw-imdb-dataset.sql
+    │   ├── create-raw-imdb-tables-full-final.sql
+    │   ├── create-silver-imdb-title-basics.sql
+    │   ├── create-tables-from-raw-imdb-dataset.sql
+    │   ├── recreate-name-basics-raw-imdb.sql
+    │   └── recreate-title-basics-imdb-raw.sql
+    └── combined-gold/                  
+        ├── create-gold-analytics-schema.sql
+        └── gold-analytics.sql
+
 
 ```
 
