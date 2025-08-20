@@ -53,6 +53,8 @@ bq query --use_legacy_sql=false \
  ORDER BY start_year DESC LIMIT 15'
 
 
+# Safely delete cluster
+gcloud dataproc clusters delete imdb-mini --region=us-central1
 
 
 
