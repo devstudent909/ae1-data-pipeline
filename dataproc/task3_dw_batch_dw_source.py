@@ -84,12 +84,15 @@ directors = (directors_raw
 
 # ---------- C) TOP MOVIE BY YEAR ----------
 
-# only apply cutoff when computing top movie by year
 MIN_VOTES = int(os.getenv("MIN_VOTES", "50000"))
 
-w = W.Window.partitionBy("start_year").orderBy(F.col("averageRating").desc(), F.col("numVotes").desc())
-top_by_year = (movies
-    .filter(F.col("numVotes") >= MIN_VOTES)
+w = W.Window.partitionBy("start_year").orderBy(
+    F.col("averageRating").desc(), F.col("numVotes").desc()
+)
+
+top_by_year = (
+    movies
+    .filter(F.col("numVotes") >= MIN_VOTES)        # <-- votes floor here
     .withColumn("rn", F.row_number().over(w))
     .filter(F.col("rn") == 1)
     .select("tconst", "start_year", "averageRating", "numVotes")
