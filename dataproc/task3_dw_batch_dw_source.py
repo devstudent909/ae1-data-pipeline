@@ -20,12 +20,9 @@ dg   = spark.read.format("bigquery").option("table", bq(f"{SRC_DATASET}.dim_genr
 dt   = spark.read.format("bigquery").option("table", bq(f"{SRC_DATASET}.dim_title")).load()
 
 
-# Filter movies with at least 50k votes
-movies = (fact
-    .filter((F.col("titleType") == "movie") &
-            F.col("start_year").isNotNull() &
-            (F.col("numVotes") >= 50000))
-)
+# Keep all movies; no votes cutoff 
+movies = fact.filter((F.col("titleType") == "movie") & F.col("start_year").isNotNull())
+
 
 # ---------- A) GENRE x YEAR ----------
 gxy_raw = (movies
@@ -86,8 +83,13 @@ directors = (directors_raw
  .save())
 
 # ---------- C) TOP MOVIE BY YEAR ----------
+
+# only apply cutoff when computing top movie by year
+MIN_VOTES = int(os.getenv("MIN_VOTES", "50000"))
+
 w = W.Window.partitionBy("start_year").orderBy(F.col("averageRating").desc(), F.col("numVotes").desc())
 top_by_year = (movies
+    .filter(F.col("numVotes") >= MIN_VOTES)
     .withColumn("rn", F.row_number().over(w))
     .filter(F.col("rn") == 1)
     .select("tconst", "start_year", "averageRating", "numVotes")
