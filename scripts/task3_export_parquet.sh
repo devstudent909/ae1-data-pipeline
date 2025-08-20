@@ -1,13 +1,16 @@
-DEST_BUCKET=ae1-gold-data-bucket
+#!/usr/bin/env bash
+set -euo pipefail
 
-bq extract --destination_format=PARQUET \
-  upheld-caldron-468622-n6:dw_imdb_agg.genre_year \
-  gs://$DEST_BUCKET/task3/genre_year/*.parquet
+PROJECT_ID="${PROJECT_ID:-upheld-caldron-468622-n6}"
+DEST_BUCKET="${DEST_BUCKET:-ae1-gold-data-bucket}"   # must be US
+DATASET="${DATASET:-dw_imdb_agg}"
+PREFIX="${PREFIX:-task3}"
 
-bq extract --destination_format=PARQUET \
-  upheld-caldron-468622-n6:dw_imdb_agg.director_stats \
-  gs://$DEST_BUCKET/task3/director_stats/*.parquet
+bq extract --location=US --destination_format=PARQUET \
+  "${PROJECT_ID}:${DATASET}.genre_year"        "gs://${DEST_BUCKET}/${PREFIX}/genre_year/*.parquet"
 
-bq extract --destination_format=PARQUET \
-  upheld-caldron-468622-n6:dw_imdb_agg.top_movie_by_year \
-  gs://$DEST_BUCKET/task3/top_movie_by_year/*.parquet
+bq extract --location=US --destination_format=PARQUET \
+  "${PROJECT_ID}:${DATASET}.director_stats"    "gs://${DEST_BUCKET}/${PREFIX}/director_stats/*.parquet"
+
+bq extract --location=US --destination_format=PARQUET \
+  "${PROJECT_ID}:${DATASET}.top_movie_by_year" "gs://${DEST_BUCKET}/${PREFIX}/top_movie_by_year/*.parquet"
