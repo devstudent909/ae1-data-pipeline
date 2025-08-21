@@ -114,7 +114,16 @@ st.plotly_chart(fig3, use_container_width=True)
 
 st.markdown("### 3) Top movie by year")
 tby = query_top_movie_by_year()
-st.dataframe(tby.tail(15), use_container_width=True)
+
+st.dataframe(
+    tby.tail(15),
+    use_container_width=True,
+    hide_index=True,
+    column_config={
+        "start_year": st.column_config.NumberColumn("start_year", format="%d", step=1),
+    },
+)
+
 
 # Downloads
 st.download_button("Download director leaderboard (CSV)", dl.to_csv(index=False).encode("utf-8"),
