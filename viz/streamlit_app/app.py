@@ -42,9 +42,7 @@ def load_top_genres(limit=10, min_year=None, max_year=None):
 def query_genre_trend(genres, min_year, max_year):
     genres_list = ",".join([f"'{g}'" for g in genres]) if genres else "''"
     q = f"""
-    SELECT start_year, genre, movie_count,
-           SAFE_DIVIDE(SUM(averageRating * numVotes) OVER(PARTITION BY start_year, genre),
-                       SUM(numVotes) OVER(PARTITION BY start_year, genre)) AS weighted_avg_rating
+    SELECT start_year, genre, movie_count, weighted_avg_rating
     FROM `{DEFAULT_PROJECT}.{DATASET}.genre_year`
     WHERE start_year BETWEEN {int(min_year)} AND {int(max_year)}
       AND genre IN ({genres_list})
