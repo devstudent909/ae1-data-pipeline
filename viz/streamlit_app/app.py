@@ -48,7 +48,7 @@ def query_genre_trend(genres, min_year, max_year):
       AND genre IN ({genres_list})
     ORDER BY start_year, genre
     """
-    return get_bq_client().query(q).to_dataframe()
+    return get_bq_client().query(q, location="US").to_dataframe()
 
 @st.cache_data(ttl=600)
 def query_director_leaderboard(limit=15):
